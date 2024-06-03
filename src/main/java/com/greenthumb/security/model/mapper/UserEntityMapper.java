@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper
@@ -25,6 +26,7 @@ public interface UserEntityMapper {
     UserEntity toUserEntity(UserDTO userDTO);
     UserEntity toUserEntity(UserUpdateDTO userUpdateDTO);
     UserEntity toUserEntity(UserCreateDTO userCreateDTO);
+    List<UserDTO> toUserDTOs(List<UserEntity> userEntities);
 
     default UserDetails toUserDetails(UserEntity userEntity) {
         Collection<GrantedAuthority> authorities = userEntity.getRoleEntities().stream()
