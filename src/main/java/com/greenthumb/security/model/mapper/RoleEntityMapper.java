@@ -5,7 +5,7 @@ import com.greenthumb.security.model.entity.RoleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface RoleEntityMapper {
 
     RoleEntityMapper INSTANCE = Mappers.getMapper(RoleEntityMapper.class);
