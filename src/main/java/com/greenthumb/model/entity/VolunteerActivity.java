@@ -27,7 +27,7 @@ public class VolunteerActivity {
     private String description;
 
 
-    @ManyToMany(mappedBy = "volunteerActivities")
+    @OneToMany(mappedBy = "volunteerActivity")
     private List<UserEntity> users;
 
     @ManyToMany

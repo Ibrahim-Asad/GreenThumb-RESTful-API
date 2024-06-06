@@ -26,5 +26,4 @@ public class KnowledgeResource {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    // Getters and Setters
 }

@@ -1,45 +1,48 @@
 package com.greenthumb.security.controller;
 
+import com.greenthumb.security.JwtUtil;
+import com.greenthumb.security.model.dto.JwtResponse;
+import com.greenthumb.security.model.dto.UserCreateDTO;
+import com.greenthumb.security.model.dto.UserDTO;
+import com.greenthumb.security.service.impl.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
 
-import java.time.Instant;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class AuthController {
 
+
+    private final UserServiceImpl userService;
+    private final JwtUtil jwtUtil;
+
     @Autowired
-    private JwtEncoder jwtEncoder;
+    public AuthController(UserServiceImpl userService, JwtUtil jwtUtil) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> registerUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
+        UserDTO registeredUser = userService.createUser(userCreateDTO);
+        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+    }
 
     @PostMapping("/authenticate")
-    public JwtResponse authenticate(Authentication authentication){
-        return new JwtResponse(createToken(authentication));
+    public ResponseEntity<JwtResponse> authenticate(Authentication authentication) {
+        String token = jwtUtil.createToken(authentication);
+        JwtResponse jwtResponse = jwtUtil.buildJwtResponse(token, authentication);
+        return ResponseEntity.ok(jwtResponse);
     }
 
-    private String createToken(Authentication authentication) {
-        var claims = JwtClaimsSet.builder()
-                .issuer("self")
-                .issuedAt(Instant.now())
-                .expiresAt(Instant.now().plusSeconds(60*30))
-                .subject(authentication.getName())
-                .claim("scope",createScope(authentication))
-                .build();
-
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-    }
-
-    private String createScope(Authentication authentication) {
-        return authentication.getAuthorities().stream()
-                .map(a -> a.getAuthority())
-                .collect(Collectors.joining(" "));
-    }
 }
-record JwtResponse(String token){}
