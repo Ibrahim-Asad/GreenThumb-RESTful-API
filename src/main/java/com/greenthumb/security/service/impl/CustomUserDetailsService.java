@@ -1,4 +1,4 @@
-package com.greenthumb.security.service;
+package com.greenthumb.security.service.impl;
 
 import com.greenthumb.security.model.entity.UserEntity;
 import com.greenthumb.security.model.mapper.UserEntityMapper;
@@ -15,6 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepo userRepo;
     private final UserEntityMapper userEntityMapper;
 
+
     @Autowired
     public CustomUserDetailsService(UserRepo userRepo){
         this.userRepo=userRepo;
@@ -26,5 +27,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return userEntityMapper.toUserDetails(user);
     }
+
 }
 
