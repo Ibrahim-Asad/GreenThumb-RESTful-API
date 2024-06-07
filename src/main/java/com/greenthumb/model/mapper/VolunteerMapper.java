@@ -5,7 +5,7 @@ import com.greenthumb.model.entity.Volunteer;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper (componentModel = "spring")
 public interface VolunteerMapper {
 
     VolunteerMapper INSTANCE = Mappers.getMapper(VolunteerMapper.class);

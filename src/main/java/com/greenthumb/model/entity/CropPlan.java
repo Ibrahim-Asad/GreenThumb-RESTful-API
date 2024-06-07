@@ -33,5 +33,4 @@ public class CropPlan {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    // Getters and Setters
 }
