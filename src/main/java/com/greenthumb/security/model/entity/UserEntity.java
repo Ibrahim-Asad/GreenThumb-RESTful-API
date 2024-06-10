@@ -49,9 +49,8 @@ public class UserEntity {
     )
     private List<RoleEntity> roleEntities;
 
-    @LazyCollection(LazyCollectionOption.TRUE)
-    @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_community_garden",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -59,7 +58,7 @@ public class UserEntity {
     )
     private List<CommunityGarden> communityGardens;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "volunteer_activity_id")
     private VolunteerActivity volunteerActivity;
 }

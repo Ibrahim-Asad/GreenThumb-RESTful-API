@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResourceExchangeDTO {
-    private String resourceType;
-    private String description;
-    private int quantity;
+public class VolunteerActivityDTos {
+    private Long id;
+    private String activityName;
+
 }

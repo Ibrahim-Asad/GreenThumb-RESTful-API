@@ -5,7 +5,7 @@ import com.greenthumb.model.entity.Plot;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface PlotMapper {
 
     PlotMapper INSTANCE = Mappers.getMapper(PlotMapper.class);

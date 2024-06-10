@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cropPlans")
+@RequestMapping("/api")
 public class CropPlanController {
 
     private final CropPlanService cropPlanService;
@@ -26,27 +26,35 @@ public class CropPlanController {
         return ResponseEntity.ok(cropPlanService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}/cropPlans")
     public ResponseEntity<CropPlanDTO> getCropPlanById(@PathVariable Long id) {
         return ResponseEntity.ok(cropPlanService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("/admin/cropPlans")
     public ResponseEntity<CropPlanDTO> createCropPlan(@RequestBody CropPlanDTO cropPlanDTO) {
         CropPlanDTO newCropPlan = cropPlanService.create(cropPlanDTO);
         return ResponseEntity.ok(newCropPlan);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}/cropPlans")
     public ResponseEntity<CropPlanDTO> updateCropPlan(@PathVariable Long id, @RequestBody CropPlanDTO cropPlanDTO) {
         CropPlanDTO updatedCropPlan = cropPlanService.update(id, cropPlanDTO);
         return ResponseEntity.ok(updatedCropPlan);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}/cropPlans")
     public ResponseEntity<Void> deleteCropPlan(@PathVariable Long id) {
         cropPlanService.delete(id);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping("/user/schedule/cropPlans")
+    public ResponseEntity<CropPlanDTO> scheduleCropPlan(
+            @RequestParam Long userId, @RequestParam Long plotId, @RequestBody CropPlanDTO cropPlanDTO
+    )
+    {
+        CropPlanDTO scheduledCropPlan = cropPlanService.scheduleCropPlan(userId, plotId, cropPlanDTO);
+        return ResponseEntity.ok(scheduledCropPlan);
     }
 }
 

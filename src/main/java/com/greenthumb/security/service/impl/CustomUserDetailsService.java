@@ -3,6 +3,7 @@ package com.greenthumb.security.service.impl;
 import com.greenthumb.security.model.entity.UserEntity;
 import com.greenthumb.security.model.mapper.UserEntityMapper;
 import com.greenthumb.security.repository.UserRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.userRepo=userRepo;
         this.userEntityMapper = UserEntityMapper.INSTANCE;
     }
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepo.findByUsername(username)

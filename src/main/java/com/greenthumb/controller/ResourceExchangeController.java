@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/resourceExchanges")
+@RequestMapping("/api")
 public class ResourceExchangeController {
 
     private final ResourceExchangeService resourceExchangeService;
@@ -20,34 +20,49 @@ public class ResourceExchangeController {
         this.resourceExchangeService = resourceExchangeService;
     }
 
-    @GetMapping
+    @GetMapping("/volunteer/resourceExchanges")
     public ResponseEntity<List<ResourceExchangeDTO>> getAllResourceExchanges() {
         List<ResourceExchangeDTO> exchanges = resourceExchangeService.findAll();
         return ResponseEntity.ok(exchanges);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/volunteer/{id}/resourceExchanges")
     public ResponseEntity<ResourceExchangeDTO> getResourceExchangeById(@PathVariable Long id) {
         ResourceExchangeDTO exchange = resourceExchangeService.findById(id);
         return ResponseEntity.ok(exchange);
     }
 
-    @PostMapping
+    @PostMapping("/admin/resourceExchanges")
     public ResponseEntity<ResourceExchangeDTO> createResourceExchange(@RequestBody ResourceExchangeDTO resourceExchangeDTO) {
         ResourceExchangeDTO newExchange = resourceExchangeService.create(resourceExchangeDTO);
         return ResponseEntity.ok(newExchange);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}/resourceExchanges")
     public ResponseEntity<ResourceExchangeDTO> updateResourceExchange(@PathVariable Long id, @RequestBody ResourceExchangeDTO resourceExchangeDTO) {
         ResourceExchangeDTO updatedExchange = resourceExchangeService.update(id, resourceExchangeDTO);
         return ResponseEntity.ok(updatedExchange);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("admin/{id}/resourceExchanges")
     public ResponseEntity<Void> deleteResourceExchange(@PathVariable Long id) {
         resourceExchangeService.delete(id);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping("/volunteer/decrementQuantity/resourceExchanges")
+    public ResponseEntity<ResourceExchangeDTO> decrementQuantity(
+            @RequestParam Long resourceId, @RequestParam Long userId, @RequestParam int amount
+    ) {
+        ResourceExchangeDTO updatedResourceExchange = resourceExchangeService.decrementQuantity(resourceId, userId, amount);
+        return ResponseEntity.ok(updatedResourceExchange);
+    }
+
+    @PostMapping("/volunteer/incrementQuantity/resourceExchanges")
+    public ResponseEntity<ResourceExchangeDTO> incrementQuantity(
+            @RequestParam Long resourceId, @RequestParam Long userId, @RequestParam int amount
+    ) {
+        ResourceExchangeDTO updatedResourceExchange = resourceExchangeService.incrementQuantity(resourceId, userId, amount);
+        return ResponseEntity.ok(updatedResourceExchange);
     }
 }
 

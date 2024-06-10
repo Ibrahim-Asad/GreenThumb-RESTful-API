@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/plots")
+@RequestMapping("/api")
 public class PlotController {
 
     private final PlotService plotService;
@@ -20,31 +20,31 @@ public class PlotController {
         this.plotService = plotService;
     }
 
-    @GetMapping
+    @GetMapping("/volunteer/plots")
     public ResponseEntity<List<PlotDTO>> getAllPlots() {
         List<PlotDTO> plots = plotService.findAll();
         return ResponseEntity.ok(plots);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/volunteer/{id}/plots")
     public ResponseEntity<PlotDTO> getPlotById(@PathVariable Long id) {
         PlotDTO plot = plotService.findById(id);
         return ResponseEntity.ok(plot);
     }
 
-    @PostMapping
+    @PostMapping("/admin/plots")
     public ResponseEntity<PlotDTO> createPlot(@RequestBody PlotDTO plotDTO) {
         PlotDTO newPlot = plotService.create(plotDTO);
         return ResponseEntity.ok(newPlot);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}/plots")
     public ResponseEntity<PlotDTO> updatePlot(@PathVariable Long id, @RequestBody PlotDTO plotDTO) {
         PlotDTO updatedPlot = plotService.update(id, plotDTO);
         return ResponseEntity.ok(updatedPlot);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}/plots")
     public ResponseEntity<Void> deletePlot(@PathVariable Long id) {
         plotService.delete(id);
         return ResponseEntity.ok().build();

@@ -2,25 +2,36 @@ package com.greenthumb.service.impl;
 
 
 
+import com.greenthumb.model.dto.VolunteerActivityDTO;
 import com.greenthumb.model.dto.VolunteerDTO;
 import com.greenthumb.model.entity.Volunteer;
+import com.greenthumb.model.entity.VolunteerActivity;
+import com.greenthumb.model.mapper.VolunteerActivityMapper;
 import com.greenthumb.model.mapper.VolunteerMapper;
+import com.greenthumb.repository.VolunteerActivityRepo;
 import com.greenthumb.repository.VolunteerRepo;
 import com.greenthumb.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class VolunteerServiceImpl implements VolunteerService {
 
-    @Autowired
     private VolunteerRepo volunteerRepo;
+    private VolunteerActivityRepo volunteerActivityRepo;
+    private VolunteerMapper volunteerMapper;
 
     @Autowired
-    private VolunteerMapper volunteerMapper;
+    public VolunteerServiceImpl(VolunteerRepo volunteerRepo, VolunteerActivityRepo volunteerActivityRepo, VolunteerMapper volunteerMapper) {
+        this.volunteerRepo = volunteerRepo;
+        this.volunteerActivityRepo = volunteerActivityRepo;
+        this.volunteerMapper = volunteerMapper;
+    }
 
     @Override
     public List<VolunteerDTO> getAllVolunteers() {
@@ -65,5 +76,43 @@ public class VolunteerServiceImpl implements VolunteerService {
                 })
                 .orElse(false);
     }
+
+    @Override
+    @Transactional
+    public VolunteerDTO scheduleActivityForVolunteer(Long volunteerId, Long activityId) {
+        Optional<Volunteer> volunteerOptional = volunteerRepo.findById(volunteerId);
+        Optional<VolunteerActivity> activityOptional = volunteerActivityRepo.findById(activityId);
+
+        if (volunteerOptional.isPresent() && activityOptional.isPresent()) {
+            Volunteer volunteer = volunteerOptional.get();
+            VolunteerActivity activity = activityOptional.get();
+
+            if (!volunteer.getActivities().contains(activity)) {
+                volunteer.getActivities().add(activity);
+                activity.getVolunteers().add(volunteer);
+                volunteerRepo.save(volunteer);
+                volunteerActivityRepo.save(activity);
+            }
+
+            return volunteerMapper.INSTANCE.toVolunteerDTO(volunteer);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<VolunteerActivityDTO> getActivitiesForVolunteer(Long volunteerId) {
+        Optional<Volunteer> volunteerOptional = volunteerRepo.findById(volunteerId);
+        if (volunteerOptional.isPresent()) {
+            Volunteer volunteer = volunteerOptional.get();
+            return volunteer.getActivities().stream()
+                    .map(VolunteerActivityMapper.INSTANCE::toVolunteerActivityDTO)
+                    .collect(Collectors.toList());
+        } else {
+            return null;
+        }
+    }
+
 }
 

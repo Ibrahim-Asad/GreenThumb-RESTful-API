@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/knowledgeResources")
+@RequestMapping("/api")
 public class KnowledgeResourceController {
 
     private final KnowledgeResourceService knowledgeResourceService;
@@ -21,31 +21,31 @@ public class KnowledgeResourceController {
         this.knowledgeResourceService = knowledgeResourceService;
     }
 
-    @GetMapping
+    @GetMapping("/volunteer/knowledgeResources")
     public ResponseEntity<List<KnowledgeResourceDTO>> getAllKnowledgeResources() {
         List<KnowledgeResourceDTO> resources = knowledgeResourceService.findAll();
         return ResponseEntity.ok(resources);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/volunteer/{id}/knowledgeResources")
     public ResponseEntity<KnowledgeResourceDTO> getKnowledgeResourceById(@PathVariable Long id) {
         KnowledgeResourceDTO resource = knowledgeResourceService.findById(id);
         return ResponseEntity.ok(resource);
     }
 
-    @PostMapping
+    @PostMapping("/admin/knowledgeResources")
     public ResponseEntity<KnowledgeResourceDTO> createKnowledgeResource(@RequestBody KnowledgeResourceDTO knowledgeResourceDTO) {
         KnowledgeResourceDTO newResource = knowledgeResourceService.create(knowledgeResourceDTO);
         return ResponseEntity.ok(newResource);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}/knowledgeResources")
     public ResponseEntity<KnowledgeResourceDTO> updateKnowledgeResource(@PathVariable Long id, @RequestBody KnowledgeResourceDTO knowledgeResourceDTO) {
         KnowledgeResourceDTO updatedResource = knowledgeResourceService.update(id, knowledgeResourceDTO);
         return ResponseEntity.ok(updatedResource);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}/knowledgeResources")
     public ResponseEntity<Void> deleteKnowledgeResource(@PathVariable Long id) {
         knowledgeResourceService.delete(id);
         return ResponseEntity.ok().build();
