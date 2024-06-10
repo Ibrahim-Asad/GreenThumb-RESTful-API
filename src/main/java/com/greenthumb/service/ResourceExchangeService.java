@@ -10,5 +10,7 @@ public interface ResourceExchangeService {
     ResourceExchangeDTO create(ResourceExchangeDTO resourceExchangeDTO);
     ResourceExchangeDTO update(Long id, ResourceExchangeDTO resourceExchangeDTO);
     void delete(Long id);
+    ResourceExchangeDTO decrementQuantity(Long resourceId, Long userId, int amount);
+    ResourceExchangeDTO incrementQuantity(Long resourceId, Long userId, int amount);
 }
 

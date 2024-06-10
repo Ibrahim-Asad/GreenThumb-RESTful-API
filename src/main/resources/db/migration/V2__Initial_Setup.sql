@@ -3,9 +3,11 @@ USE `greenthumb_db`;
 
 
 -- Inserting data into the role table
-INSERT INTO `role` (`id`,`name`) VALUES
-                                (1,'ROLE_ADMIN'),
-                                (2,'ROLE_USER');
+INSERT INTO `role` (`id`, `name`) VALUES
+                                      (1, 'ROLE_ADMIN'),
+                                      (2, 'ROLE_USER'),
+                                      (3, 'ROLE_VOLUNTEER');
+
 
 
 -- Associating users with roles in user_roles table
@@ -16,8 +18,8 @@ INSERT INTO `user_roles` (`user_id`, `role_id`) VALUES
                                                     (3, 2),
                                                     (4, 2),
                                                     (5, 2),
-                                                    (6, 2),
-                                                    (7, 2);
+                                                    (6, 3),
+                                                    (7, 3);
 
 
 INSERT INTO `community_garden` (`name`, `location`, `sunlight`, `soil_type`) VALUES
@@ -113,12 +115,12 @@ INSERT INTO `local_partners` (`name`, `service`, `email`) VALUES
                                                               ('Partner E', 'Watering Systems', 'partnere@example.com');
 
 -- Inserting data into the resource_exchanges table
-INSERT INTO `resource_exchanges` (`resource_type`, `description`, `local_partner_id`) VALUES
-                                                                                          ('Soil', 'High-quality loamy soil', 1),
-                                                                                          ('Fertilizer', 'Organic compost', 2),
-                                                                                          ('Pest Control', 'Natural pesticide', 3),
-                                                                                          ('Seeds', 'Organic vegetable seeds', 4),
-                                                                                          ('Watering System', 'Drip irrigation system', 5);
+INSERT INTO `resource_exchanges` (`resource_type`, `description`, `local_partner_id`,`quantity`) VALUES
+                                                                                          ('Soil', 'High-quality loamy soil', 1,1),
+                                                                                          ('Fertilizer', 'Organic compost', 2,2),
+                                                                                          ('Pest Control', 'Natural pesticide', 3,3),
+                                                                                          ('Seeds', 'Organic vegetable seeds', 4,4),
+                                                                                          ('Watering System', 'Drip irrigation system', 5,5);
 
 -- Associating users with resource exchanges in resource_exchange_user table
 INSERT INTO `resource_exchange_user` (`resource_exchange_id`, `user_id`) VALUES

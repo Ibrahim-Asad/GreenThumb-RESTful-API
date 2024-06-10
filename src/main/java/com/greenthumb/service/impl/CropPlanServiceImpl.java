@@ -4,8 +4,12 @@ package com.greenthumb.service.impl;
 
 import com.greenthumb.model.dto.CropPlanDTO;
 import com.greenthumb.model.entity.CropPlan;
+import com.greenthumb.model.entity.Plot;
 import com.greenthumb.model.mapper.CropPlanMapper;
 import com.greenthumb.repository.CropPlanRepo;
+import com.greenthumb.repository.PlotRepo;
+import com.greenthumb.security.model.entity.UserEntity;
+import com.greenthumb.security.repository.UserRepo;
 import com.greenthumb.service.CropPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,16 @@ import java.util.stream.Collectors;
 public class CropPlanServiceImpl implements CropPlanService {
 
     private final CropPlanRepo cropPlanRepo;
+    private final UserRepo userRepo;
+    private final PlotRepo plotRepo;
+
+
 
     @Autowired
-    public CropPlanServiceImpl(CropPlanRepo cropPlanRepo) {
+    public CropPlanServiceImpl(CropPlanRepo cropPlanRepo,UserRepo userRepo,PlotRepo plotRepo) {
+        this.userRepo=userRepo;
         this.cropPlanRepo = cropPlanRepo;
+        this.plotRepo=plotRepo;
     }
 
     @Override
@@ -60,6 +70,20 @@ public class CropPlanServiceImpl implements CropPlanService {
         CropPlan cropPlan = cropPlanRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Crop plan not found"));
         cropPlanRepo.delete(cropPlan);
+    }
+    @Override
+    public CropPlanDTO scheduleCropPlan(Long userId, Long plotId, CropPlanDTO cropPlanDTO) {
+        UserEntity user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Plot plot = plotRepo.findById(plotId)
+                .orElseThrow(() -> new RuntimeException("Plot not found"));
+
+        CropPlan cropPlan = CropPlanMapper.INSTANCE.tocropPlan(cropPlanDTO);
+        cropPlan.setUser(user);
+        cropPlan.setPlot(plot);
+        cropPlan = cropPlanRepo.save(cropPlan);
+
+        return CropPlanMapper.INSTANCE.tocropPlanDTO(cropPlan);
     }
 }
 

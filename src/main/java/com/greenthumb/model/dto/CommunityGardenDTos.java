@@ -12,10 +12,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommunityGardenDTO {
-    private String name;
-    private String location;
-    private String sunlight;
-    private String soilType;
-    private List<UserDTO> users;
+public class CommunityGardenDTos {
+    private Long id;
+    private String name;;
+
 }

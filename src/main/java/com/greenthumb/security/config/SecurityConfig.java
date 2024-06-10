@@ -42,11 +42,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> {
-                    auth
-                            .requestMatchers("/v3/api-docs/**", "/api/Community-Garden/get-all", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/api/register", "/api/authenticate").permitAll()
-                            .anyRequest().authenticated();
-                })
+                .authorizeRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                "/api/register",
+                                "/api/authenticate"
+                        ).permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/user/**").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/api/volunteer/**").hasAnyRole("ADMIN", "USER", "VOLUNTEER")
+                        .anyRequest().authenticated()
+                )
                 .formLogin(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(Customizer.withDefaults())

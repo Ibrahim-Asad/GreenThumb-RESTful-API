@@ -4,6 +4,7 @@ package com.greenthumb.security.controller;
 import com.greenthumb.security.model.dto.UserCreateDTO;
 import com.greenthumb.security.model.dto.UserDTO;
 import com.greenthumb.security.model.dto.UserUpdateDTO;
+import com.greenthumb.security.model.entity.UserEntity;
 import com.greenthumb.security.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,7 @@ public class UserController {
 
     @GetMapping
     public List<UserDTO> getAllUsers() {
-            List<UserDTO> usersDTO = userService.getAllUsers();
-            return usersDTO;
+            return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")

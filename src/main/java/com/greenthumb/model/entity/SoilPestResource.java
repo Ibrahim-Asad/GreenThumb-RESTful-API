@@ -21,8 +21,4 @@ public class SoilPestResource {
     private String resourceType;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "community_garden_id")
-    private CommunityGarden communityGarden;
-
 }

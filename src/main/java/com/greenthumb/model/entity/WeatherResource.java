@@ -20,13 +20,24 @@ public class WeatherResource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date date;
-    private String weatherCondition;
+    private double latitude;
+    private double longitude;
+    private String cityName;
+    private String country;
     private double temperature;
+    private double feelsLike;
+    private double tempMin;
+    private double tempMax;
+    private int pressure;
+    private int humidity;
+    private double windSpeed;
+    private int windDegree;
+    private int cloudiness;
+    private Date date;
+    private Date sunrise;
+    private Date sunset;
 
     @ManyToOne
     @JoinColumn(name = "community_garden_id")
     private CommunityGarden communityGarden;
-
-    // Getters and Setters
 }

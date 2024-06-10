@@ -1,9 +1,12 @@
 package com.greenthumb.model.dto;
 
+import com.greenthumb.model.entity.VolunteerActivity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -14,4 +17,5 @@ public class VolunteerDTO {
     private String contactInfo;
     private String skills;
     private String availability;
+    private List<VolunteerActivityDTos> activities;
 }

@@ -20,6 +20,6 @@ public class RoleEntity {
 
     private String name;
 
-    @ManyToMany(mappedBy = "roleEntities")
+    @ManyToMany(mappedBy = "roleEntities", fetch = FetchType.EAGER)
     private List<UserEntity> users;
 }
