@@ -9,6 +9,11 @@ import com.greenthumb.service.external_api.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Optional;
 
@@ -25,6 +30,16 @@ public class WeatherController {
         this.communityGardenRepo = communityGardenRepo;
     }
 
+
+    @Operation(summary = "Get current weather by latitude and longitude", description = "Retrieves the current weather information based on latitude and longitude")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather data retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = WeatherResourceDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input parameters",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
     @GetMapping("/current-weather/latlon")
     public ResponseEntity<WeatherResourceDTO> getCurrentWeatherByLatLon(
             @RequestParam("lat") double latitude,
@@ -33,6 +48,16 @@ public class WeatherController {
         return ResponseEntity.ok(weatherData);
     }
 
+
+    @Operation(summary = "Get current weather by city name", description = "Retrieves the current weather information based on city name")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather data retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = WeatherResourceDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid input parameters",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
     @GetMapping("/current-weather/city")
     public ResponseEntity<WeatherResourceDTO> getCurrentWeatherByCity(
             @RequestParam("city") String cityName) {
@@ -40,6 +65,18 @@ public class WeatherController {
         return ResponseEntity.ok(weatherData);
     }
 
+
+    @Operation(summary = "Save weather data", description = "Saves the current weather information for a specific community garden based on latitude and longitude")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather data saved successfully",
+                    content = @Content(schema = @Schema(implementation = WeatherResource.class))),
+            @ApiResponse(responseCode = "404", description = "Community garden not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid input parameters",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
     @PostMapping("/save-weather")
     public ResponseEntity<WeatherResource> saveWeatherData(
             @RequestParam("lat") double latitude,
@@ -51,6 +88,15 @@ public class WeatherController {
         return ResponseEntity.ok(weatherResource);
     }
 
+    @Operation(summary = "Get weather data for a community garden", description = "Retrieves the weather information for a specific community garden")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Weather data retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = WeatherResourceDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Community garden or weather data not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content)
+    })
     @GetMapping("/community-garden-weather")
     public ResponseEntity<Optional<WeatherResourceDTO>> getWeatherDataForCommunityGarden(@RequestParam("gardenId") Long gardenId) {
         Optional<WeatherResourceDTO> weatherData = weatherService.getWeatherDataForCommunityGarden(gardenId);
