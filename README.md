@@ -57,7 +57,6 @@ GreenThumb is an API-based platform designed to promote urban gardening, sustain
 
 ### Mapping Tools
 - **mapstruct**: Code generation tool for simplifying mappings between Java bean types.
-- **modelmapper**: Library for mapping Java objects (DTOs) to one another.
 
 ### Lombok
 - **lombok**: Library for reducing boilerplate code in Java applications.
