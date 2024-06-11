@@ -16,10 +16,9 @@ GreenThumb is an API-based platform designed to promote urban gardening, sustain
 6. **Volunteer Coordination**: Coordinate volunteers for community garden maintenance, events, and educational workshops.
 7. **Local Partnership Integration**: Integrate with local nurseries, farms, and organizations to promote their products, services, and events.
 
-
 ## External API Integration
-- **Weather and Climate Data**: Provide accurate local climate data for informed gardening decisions.
 
+- **Weather and Climate Data**: Provide accurate local climate data for informed gardening decisions.
 
 ## Technologies Used
 
@@ -29,7 +28,6 @@ GreenThumb is an API-based platform designed to promote urban gardening, sustain
 - **Swagger**: API documentation tool for clear and comprehensive documentation.
 - **JWT**: For secure authentication and authorization.
 - **Lombok**: Annotation-based library for reducing boilerplate code.
-
 
 ## Dependencies
 
@@ -64,14 +62,20 @@ GreenThumb is an API-based platform designed to promote urban gardening, sustain
 ### Swagger
 - **springdoc-openapi-starter-webmvc-ui**: Integrates with Spring Boot to generate OpenAPI documentation for RESTful APIs.
 
-
 ## Installation
 
-1. Clone the repository: git clone https://github.com/Ibrahim-Asad/GreenThumb-RESTful-API.git
+1. Clone the repository: `git clone https://github.com/Ibrahim-Asad/GreenThumb-RESTful-API.git`
 2. Navigate to the project directory.
 3. Build and run the application.
 4. Access the API documentation at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
 
+## API Documentation
+
+### Apidog Documentation
+For detailed API documentation, visit: [API Documentation](https://2oeincv2y8.apidog.io)
+
+### Swagger Documentation
+You can also view the Swagger documentation by opening the `swagger.html` file located in the `docs` folder. Open the file in your web browser to explore the API endpoints and their details.
 
 ## License
 
