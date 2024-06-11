@@ -17,8 +17,11 @@ public class SwaggerConfig {
                 .info(new Info().title("GreenThumb API")
                         .description("GreenThumb application API documentation")
                         .version("1.0.0")
-                        .contact(new Contact().name("Your Name").email("your.email@example.com").url("https://www.example.com"))
-                        .license(new License().name("Apache 2.0").url("http://springdoc.org")))
+                        .contact(new Contact().name("Ibrahim Assad, Ahmad Alahmadneh, Khaled Sholi")
+                                .email("i.a.s.assad33@gmail.com, alahamadneh35@gmail.com, Khaled.sholi2@gmail.com")
+                                .url("https://github.com/Ibrahim-Asad/GreenThumb-RESTful-API"))
+                        .license(new License().name("MIT License")
+                                .url("https://opensource.org/licenses/MIT")))
                 .externalDocs(new ExternalDocumentation()
                         .description("GreenThumb Wiki Documentation")
                         .url("https://greenthumb.wiki.github.org/docs"));

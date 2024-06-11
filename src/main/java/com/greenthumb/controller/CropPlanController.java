@@ -34,7 +34,7 @@ public class CropPlanController {
             @ApiResponse(responseCode = "500", description = "Internal server error",
                     content = @Content)
     })
-    @GetMapping
+    @GetMapping("/user")
     public ResponseEntity<List<CropPlanDTO>> getAllCropPlans() {
         return ResponseEntity.ok(cropPlanService.findAll());
     }
