@@ -21,18 +21,22 @@ public class JwtUtil {
 
     public String createToken(Authentication authentication) {
         Instant issuedAt = Instant.now();
-        Instant expiresAt = issuedAt.plusSeconds(60 * 30 * 60);
+        Instant expiresAt = issuedAt.plusSeconds(60 * 30);
+
+        String scope = authentication.getAuthorities().stream()
+                .map(grantedAuthority -> grantedAuthority.getAuthority().replace("ROLE_", "").toLowerCase())
+                .collect(Collectors.joining(" "));
+
         var claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(issuedAt)
                 .expiresAt(expiresAt)
                 .subject(authentication.getName())
-                .claim("scope", createScope(authentication))
+                .claim("scope", scope)
                 .build();
 
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-
     public JwtResponse buildJwtResponse(String token, Authentication authentication) {
         Instant issuedAt = Instant.now();
         Instant expiresAt = issuedAt.plusSeconds(60 * 30 * 60);
@@ -49,3 +53,4 @@ public class JwtUtil {
                 .collect(Collectors.joining(" "));
     }
 }
+
