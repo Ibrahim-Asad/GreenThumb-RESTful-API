@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class ResourceExchangeDTO {
     private String resourceType;
     private String description;
+    private int quantity;
 }

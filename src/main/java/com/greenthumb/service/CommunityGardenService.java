@@ -11,4 +11,6 @@ public interface CommunityGardenService {
     CommunityGardenDTO create(CommunityGardenDTO communityGardenDTO);
     CommunityGardenDTO update(Long id, CommunityGardenDTO communityGardenDTO);
     void delete(Long id);
+    void addUserToCommunityGarden(Long gardenId, Long userId);
+    CommunityGardenDTO getCommunityGardenWithUsers(Long gardenId);
 }

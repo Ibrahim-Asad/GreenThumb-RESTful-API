@@ -23,6 +23,7 @@ public class ResourceExchange {
 
     private String resourceType;
     private String description;
+    private int quantity;
 
     @ManyToMany
     @JoinTable(

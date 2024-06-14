@@ -12,5 +12,8 @@ public interface CropPlanService {
     CropPlanDTO create(CropPlanDTO cropPlanDTO);
     CropPlanDTO update(Long id, CropPlanDTO cropPlanDTO);
     void delete(Long id);
+    CropPlanDTO scheduleCropPlan(Long userId, Long plotId, CropPlanDTO cropPlanDTO);
+
+
 }
 

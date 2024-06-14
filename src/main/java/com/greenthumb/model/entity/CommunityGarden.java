@@ -25,7 +25,7 @@ public class CommunityGarden {
     private String sunlight;
     private String soilType;
 
-    @ManyToMany(mappedBy = "communityGardens")
+    @ManyToMany(mappedBy = "communityGardens", fetch = FetchType.EAGER)
     private List<UserEntity> users;
 
     @OneToMany(mappedBy = "communityGarden", cascade = CascadeType.ALL, orphanRemoval = true)

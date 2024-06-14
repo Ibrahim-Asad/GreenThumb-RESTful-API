@@ -5,7 +5,7 @@ import com.greenthumb.model.entity.SoilPestResource;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SoilPestResourceMapper {
 
     SoilPestResourceMapper INSTANCE = Mappers.getMapper(SoilPestResourceMapper.class);
