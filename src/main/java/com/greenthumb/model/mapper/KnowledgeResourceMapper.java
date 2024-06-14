@@ -5,7 +5,7 @@ import com.greenthumb.model.entity.KnowledgeResource;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface KnowledgeResourceMapper {
 
     KnowledgeResourceMapper INSTANCE = Mappers.getMapper(KnowledgeResourceMapper.class);
